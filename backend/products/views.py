@@ -3,6 +3,7 @@ from .models import Product, Order
 from .forms import ProductForm, OrderForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     if not request.user.is_authenticated:
@@ -12,7 +13,36 @@ def index(request):
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    return render(request, 'product_detail.html', {'product': product})
+    if request.method == 'POST':
+        if request.user == product.seller:
+            if 'delete' in request.POST:
+                product.delete()
+                return redirect('index')
+            elif 'update' in request.POST:
+                form = ProductForm(request.POST, request.FILES, instance=product)
+                if form.is_valid():
+                    form.save()
+                    return redirect('product_detail', pk=pk)
+        else:
+            # Handle contacting logic here if needed
+            pass
+    else:
+        form = ProductForm(instance=product)
+    
+    return render(request, 'product_detail.html', {'product': product, 'form': form})
+
+@login_required
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.seller = request.user
+            product.save()
+            return redirect('index')
+    else:
+        form = ProductForm()
+    return render(request, 'add_product.html', {'form': form})
 
 def contact_seller(request, pk):
     product = get_object_or_404(Product, pk=pk)
@@ -46,12 +76,13 @@ def signup_view(request):
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
+@login_required
 def user_orders(request):
     orders = Order.objects.filter(buyer=request.user)
     return render(request, 'user_orders.html', {'orders': orders})
 
+@login_required
 def profile_view(request):
-    # Assuming you want to display the profile page for the logged-in user
     return render(request, 'profile.html')
 
 def logout_view(request):
