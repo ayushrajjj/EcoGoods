@@ -1,18 +1,86 @@
+/* Base styles */
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* Header */
 header {
     background-color: #f8f8f8;
-    padding: 10px;
+    padding: 10px 20px;
     text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+nav {
+    margin-top: 10px;
 }
 
 nav a {
-    margin: 0 10px;
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 5px 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+nav a:hover {
+    background-color: #ddd;
+    color: #000;
+}
+
+.user-info {
+    margin-top: 10px;
+    font-size: 1.1em;
+}
+
+/* Button Styles */
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    display: inline-block;
     text-decoration: none;
 }
 
+.btn-add {
+    background-color: #28a745; /* Green color for the add button */
+    color: white;
+    margin-bottom: 20px; /* Space below the button */
+}
+
+.btn-add:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Main content styles */
+main {
+    padding: 20px;
+}
+
+/* Footer */
+footer {
+    background-color: #f8f8f8;
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    font-size: 0.9em;
+}
+
+/* Product Styles */
 .products {
     display: flex;
     flex-wrap: wrap;
@@ -23,7 +91,8 @@ nav a {
 .product-item {
     border: 1px solid #ddd;
     padding: 10px;
-    width: 250px; /* Adjust width as needed */
+    width: 100%;
+    max-width: 250px; /* Adjust width as needed */
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add shadow for better visual appeal */
     border-radius: 8px; /* Optional: rounded corners */
@@ -50,10 +119,34 @@ nav a {
 .product-item p {
     margin: 5px 0;
 }
-.product-details img {
-    width: 100%;
-    height: auto; /* Maintain aspect ratio */
-    max-height: 400px; /* Adjust as needed */
-    object-fit: cover; /* Crop image to fit */
-    border-radius: 4px; /* Optional: rounded corners */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .product-item {
+        max-width: 100%;
+    }
+
+    header, nav, footer {
+        text-align: center;
+    }
+
+    nav a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .user-info {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .product-item h3 {
+        font-size: 1em;
+    }
 }
