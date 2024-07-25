@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.name
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
@@ -13,7 +16,13 @@ class Product(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
     is_sold = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     buyer = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, default='Pending')
+
+    def __str__(self):
+        return self.name

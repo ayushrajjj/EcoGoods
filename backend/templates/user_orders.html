@@ -1,0 +1,23 @@
+<!-- templates/user_orders.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Your Orders</h2>
+
+{% if orders %}
+    <ul>
+        {% for order in orders %}
+            <li>
+                Product: {{ order.product.name }}<br>
+                Quantity: {{ order.quantity }}<br>
+                Status: {{ order.status }}<br>
+                Price: {{ order.product.price|floatformat:2 }}<br>
+                <a href="{% url 'product_detail' order.product.pk %}">View Product</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You have no orders.</p>
+{% endif %}
+
+{% endblock %}

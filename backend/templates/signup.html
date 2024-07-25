@@ -4,10 +4,7 @@
 <h2>Signup</h2>
 <form method="post">
     {% csrf_token %}
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+    {{ form.as_p }}
     <button type="submit">Signup</button>
 </form>
 {% endblock %}
